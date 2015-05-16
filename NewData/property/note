@@ -1,0 +1,15 @@
+aftersale.txt
+appearance.txt
+comfort.txt
+costperformance.txt
+fuelconsume.txt
+magnification.txt
+power.txt
+room.txt
+safety.txt
+trim.txt
+上面的文件是已经分类好的文件
+
+carSource1.txt中的属性的值和上面已经分好的属性分类不停的进行校正
+(把没有分类的属性放入到B文件中,再通过对B进行人工的分类)
+重复这样的几次操作,就可以把Ｂ文件变成空

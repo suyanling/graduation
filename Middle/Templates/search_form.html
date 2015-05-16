@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Search</title>
+</head>
+<body>
+	<!-- 	**{% if error %}**
+       		 **<p style="color: red;">Please submit a search term.</p>
+**
+    	**{% endif %}**
+<form action="/search/" method="get">
+	<input type="text" name='q'>
+	<input type="submit" value="search"></form>
+-->
+<h1>Contact us</h1>
+{% if errors %}
+<ul>
+	{% for error in errors %}
+	<li>{{ error }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+<form action="/contact/" method="post">{% csrf_token %}
+	<p>
+		Subject:
+		<input type="text" name="subject"></p>
+	<p>
+		Your e-mail (optional):
+		<input type="text" name="email"></p>
+	<p>
+		Message:
+		<textarea name="message" rows="10" cols="50"></textarea>
+	</p>
+	<input type="submit" value="Submit"></form>
+	<p>{{ rlt }}</p>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# 为了方便后面的操作，把文件名进行修改
+f1 = file("5w.txt", 'w')改为这样的
+f1 = file("w1.txt", 'w')
+
+
+文件w1.txt去重之后变成w_1.txt文件
+
+w_p1.txt文件是w_1.txt和intersectName1.txt文件相交之后得到的文件
+
+w_PV1.txt文件是w_p1.txt文件和addNameValue文件操作(加上相应的value)得到的文件
+
+w_PVP1.txt文件是w_PV1.txt文件和NFV_Big_1.txt文件操作(加上相应的属性值和value值)
+
+
