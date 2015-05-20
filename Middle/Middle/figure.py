@@ -5,7 +5,10 @@
 
 def allProperty(na):
     file_NPV = file('/home/susu/Desktop/NewData/total_p.txt', 'r')
+    # print "typpeof na"
+    # print type(na)
     na = na.encode('utf-8')
+    # print type(na)
     # 下面的value的值对应的大属性
     # 大属性的顺序为:
     # 1 空间 2 动力 3 操控 4 油耗 5 舒适性 6 外观 7 内饰 8 性价比 9 售后 10 安全性
@@ -19,6 +22,9 @@ def allProperty(na):
     value8 = 0
     value9 = 0
     value10 = 0
+
+    # 存贮大属性的名字和相应的value值
+    dictproperty = {}
     while True:
         # 逐行读取 并把每一行字符串变成list
         line = file_NPV.readline()
@@ -49,5 +55,21 @@ def allProperty(na):
                 value10 = int(lineList[2])
     # for x in xrange(0, 11):
     #     print "value"+str(x)
-    print value1, value2, value3, value4, value5, value6, value7, value8, value9, value10
+    # print value1, value2, value3, value4, value5, value6, value7, value8,
+    # value9, value10
     file_NPV.close()
+    dictproperty['空间'] = value1
+    dictproperty['动力'] = value2
+    dictproperty['操控'] = value3
+    dictproperty['油耗'] = value4
+    dictproperty['舒适性'] = value5
+    dictproperty['外观'] = value6
+    dictproperty['内饰'] = value7
+    dictproperty['性价比'] = value8
+    dictproperty['售后'] = value9
+    dictproperty['安全性'] = value10
+    # print dictproperty
+    for k, v in dictproperty.items():
+        print k, v
+    return dictproperty
+

@@ -4,13 +4,11 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"> -->
-	
 	{% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static "bootstrap.css" %}" >
-	{% load staticfiles %}
 	<link rel="stylesheet" type="text/css" href="{% static "bootstrap.css.map" %}" >
+	<link rel="stylesheet" type="text/css" href="{% static "jquery.jqplot.min.css" %}" >
 	<style type="text/css">
-
 	li{list-style:none}
 	body{
 		position: relative;
@@ -314,11 +312,11 @@
 			</div>
 		</div>
 		<!-- /input-group -->
-		<button type="submit" class="btn btn-default submitS">查询</button>
+		<button type="submit" class="btn btn-default submitS" id="single_submit">查询</button>
 	</form>
 	<h3 class="selectINFO">
 		您的选择是：
-		<span class="label label-default">{{nameS}}</span>
+		<span class="label label-default" id="selectName">{{nameS}}</span>
 		<span class="label label-default">{{propertyS}}</span>
 	</h3>
 	<!-- <h2>你的选择是：{{panelContent}}</h2>
@@ -331,7 +329,9 @@
 	<div class="panel-body">{{panelContent}}</div>
 </div>
 <div class="graphic">
-	<h3>图表</h3>
+	<h3>汽车的各个属性（没显示的属性的值为0）</h3>
+<!-- 	<div>{{figure}}</div> -->
+	<div id="Chart1"></div>
 </div>
 </div>
 <!-- <div id="literal_s">
@@ -450,61 +450,18 @@ Messages
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 {% load staticfiles %}
 <script src="{% static "jquery-1.11.3.js" %}" ></script>
-{% load staticfiles %}
 <script src="{% static "bootstrap.js" %}" ></script>
+<script src="{% static "jquery.jqplot.min.js" %}" ></script>
+<script src="{% static "jqplot.pieRenderer.js" %}" ></script>
+<script src="{% static "jqplot.canvasTextRenderer.min.js" %}" ></script>
+<script src="{% static "jqplot.canvasAxisLabelRenderer.min.js" %}" ></script>
+<script src="{% static "jqplot.pointLabels.min.js" %}" ></script>
+<script src="{% static "jqplot.barRenderer.min.js" %}" ></script>
+<script src="{% static "jqplot.categoryAxisRenderer.min.js" %}" ></script>
+<script src="{% static "home.js" %}" ></script>
+<script src="{% static "figure.js" %}" ></script>
 <!-- <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 最新的 Bootstrap 核心 JavaScript 文件
 <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
-<script type="text/javascript">
-	$(document).ready(function() {
-		/*
-		实现scrollspy功能
-		 */
-		$('body').scrollspy({target:'#navbar_su'});
-		$('[data-spy="scroll"]').each(function () {
-  			var $spy = $(this).scrollspy('refresh')
-		})
-
-		/*
-		实现左边导航条第二级菜单的显示和隐藏
-		 */
-		$('.nav_taggle').mouseover(function() {
-			$('.nav_taggle').find('ul').hide()
-			$(this).find('ul').show()
-			// console.log($(this))
-		 })
-		$('.nav_taggle').mouseout(function() {
-			$('.nav_taggle').find('ul').hide()
-		})
-		/*
-		实现input下拉列表，下拉列表中的选项填入input中
-		 */
-		// $(selector).on(event,childSelector,data,function,map)
-		$('.my_ullist').on('click', '.selet', function() {
-			var tmp = $(this).text();
-			var oInput = $(this).parents('.input-group').find('.userchoose');
-			/*
-			把字符串里的空格和空行删除,使用正则表达式,替换
-			 */
-			// console.log("1"+tmp)
-			tmp = tmp.replace(/\s/g,"");
-			// console.log("1"+tmp)
-			oInput.val(tmp);
-		})
-		/*
-		阻止下拉标题的点击事件
-		 */
-		// $('.dropdown-header').click(function(ev) {
-		// 	ev.stopPropagation();
-		// })
-		/*
-		
-		 */
-		// $('.submitS').click(function() {
-		// 	$('.selectINFO').show();
-		// })
-	})
-
-	</script>
 </body>
 </html>

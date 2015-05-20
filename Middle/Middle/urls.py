@@ -2,6 +2,7 @@
 from django.conf.urls import *
 from Middle.view import*
 from Middle.home import*
+
 # urlpatterns = [
 
 # url(r'^$', 'Middle.views.home', name='home'),
@@ -15,5 +16,6 @@ urlpatterns = patterns("",
                        (r'^search-form/$', search_form),
                        (r'^search/$', search),
                        (r'^contact/$', contact),
-                       (r'^home/$', home)
+                       (r'^home/$', home),
+                       (r'^singlefigure/$', singlefigure)
                        )

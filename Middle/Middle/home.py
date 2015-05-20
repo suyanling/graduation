@@ -4,7 +4,10 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from Middle.dealdata import*
 from Middle.figure import*
+from django.http import JsonResponse
+import json
 
+# NAMES = ""
 # 读取文件的信息
 
 
@@ -49,6 +52,11 @@ def getContext():
 
 
 def home(request):
+    print "nameS"
+    # NAMES = request.GET.get('nameS', '')
+    # singlefigure(NAMES)
+    # print NAMES
+    # print request.GET.get['nameS', '']
     return form1(request)
 
 # 这是对第一个表单的提交的数据进行处理
@@ -60,8 +68,6 @@ def form1(request):
     names = '汽车名'
     propertys = '属性名'
     value = ''
-    # val = ''
-    # conment = ''
     # 尝试获取提交的表单中的input的值
     # 可以使用for key in request.GET:或者if 'nameS' in request.GET:
     # 但是不可以直接nameS = req.GET['nameS']
@@ -88,7 +94,15 @@ def form1(request):
             context['panelContent'] = nameProper
     context['nameS'] = names
     context['propertyS'] = propertys
+    # 某种汽车对应的相应的属性的值
+    # figure = allProperty(names)
+    # print figure
+    # print json.dumps(figure)
+    # context['figure'] = json.dumps(figure)
+    # JsonResponse(figure)
     return render_to_response('home.html', context)
+    # return HttpResponse('home.html', json.dumps(context),
+    #                     content_type='application/json')
 
 # 这是对第二个表单提交的数据进行处理
 # 也就是多产品处理
@@ -96,3 +110,25 @@ def form1(request):
 
 def form2(request):
     pass
+
+# 单独请求图表展示产品的属性
+# 那么用户的点击两次，进行两次查询。一次是表单提交查询，一次是查看图表显示
+# 所以不考虑这个方法
+
+# 不能使用全局变量，因为没有调用函数，所以值没有做任何修改
+# print "是否改变"
+# print NAMES
+# print "*************"
+
+
+def singlefigure(request):
+    print request.get_full_path()
+    name = request.GET.get('carname', '')
+    dictproperty = allProperty(name)
+    print "11111111111111111111111"
+    # print dictproperty
+    print "singlefigure的参数是否已经传进来了"
+    # 使用render_to_response不可以
+    # 要使用HttpResponse才可以
+    return HttpResponse(json.dumps(dictproperty),
+                        content_type='application/json')
