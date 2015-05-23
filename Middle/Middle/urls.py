@@ -17,5 +17,7 @@ urlpatterns = patterns("",
                        (r'^search/$', search),
                        (r'^contact/$', contact),
                        (r'^home/$', home),
-                       (r'^singlefigure/$', singlefigure)
+                       (r'^singlefigure/$', singlefigure),
+                       (r'^singlefigure1/$', singlefigure1),
+                       (r'^singlefigure2/$', singlefigure2)
                        )

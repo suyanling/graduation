@@ -69,7 +69,6 @@ def allProperty(na):
     dictproperty['售后'] = value9
     dictproperty['安全性'] = value10
     # print dictproperty
-    for k, v in dictproperty.items():
-        print k, v
+    # for k, v in dictproperty.items():
+    #     print k, v
     return dictproperty
-

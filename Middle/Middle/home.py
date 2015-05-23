@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from Middle.dealdata import*
 from Middle.figure import*
+from Middle.recommand import*
 from django.http import JsonResponse
 import json
 
@@ -37,7 +38,7 @@ def getContext():
         #     "/home/susu/Desktop/Middle-Test/Middle/source/price" + str(num) + ".txt", 'r')
         # 使用从测试文件里提取出来的文件
         fp = file(
-            "/home/susu/Desktop/data/Car/SUM/newP" + str(num) + ".txt", 'r')
+            "/home/susu/Desktop/NewData/crawler/w_P" + str(num) + ".txt", 'r')
         context['price' + str(num)] = readfile(fp)
         num = num + 1
         # tmpFile.append(readfile(fp))
@@ -52,7 +53,6 @@ def getContext():
 
 
 def home(request):
-    print "nameS"
     # NAMES = request.GET.get('nameS', '')
     # singlefigure(NAMES)
     # print NAMES
@@ -78,6 +78,9 @@ def form1(request):
     if 'nameS' in request.GET and 'propertyS' in request.GET:
         names = request.GET['nameS']
         propertys = request.GET['propertyS']
+        figures = figureComment(names)
+        commet = suggest(names)
+        interval = propertyInterval(propertys)
         # if not names and not propertys:
         #     nameProper = namePerperty(names, propertys)
         #     context['panelContent'] = nameProper
@@ -85,12 +88,19 @@ def form1(request):
             proper = bigProperty(propertys)
             # print "proper", proper
             context['panelContent'] = proper
+            context['contentInterval'] = "价格区间： "+interval
         elif not propertys:
             value = carName(names)
-            context['panelContent'] = value
+            context['panelContent'] = value+"具体属性分析如下："
+            context['contentFigures'] = figures
+            context['contentCommet'] = commet
         else:
             # context['panelContent'] = "抱歉，暂时没有这方面的信息。"
             nameProper = namePerperty(names, propertys)
+            proper = bigProperty(propertys)
+            context['contentCommetP'] = proper
+            context['contentCommet'] = commet
+            context['contentInterval'] = "价格区间： "+interval
             context['panelContent'] = nameProper
     context['nameS'] = names
     context['propertyS'] = propertys
@@ -120,15 +130,98 @@ def form2(request):
 # print NAMES
 # print "*************"
 
+# 用户只是选择汽车名，传给图表的数据
+
 
 def singlefigure(request):
+    # 活取url中的参数（汽车名）
     print request.get_full_path()
     name = request.GET.get('carname', '')
+
+    # carsfigure 存贮自身和相应推荐的汽车的属性
+    carsfigure = {}
+    # 测试两个两个dict相加
+    # dict1 = {"1": "0", "2": "er"}
+    # dict2 = {"1": "ling", "2": "er"}
+    # print "\\\\\\\\\\\\\\\\\\\\"
+    # print dict1.items()+dict2.items()
+    # print str(dict1)
+    # print "\\\\\\\\\\\\\\\\\\\\"
+    # 使用dict3这样的数据结构更好
+    # dict3 = {"1": {
+    #     "2": "2",
+    #     "3": "3"
+    # }}
+    # print "\\\\\\\\\\\\\\\\\\\\"
+    # print dict3
+    # print "\\\\\\\\\\\\\\\\\\\\"
     dictproperty = allProperty(name)
-    print "11111111111111111111111"
-    # print dictproperty
-    print "singlefigure的参数是否已经传进来了"
+    carsfigure[name] = dictproperty
+    recomName = recommand(name)
+    for key in recomName:
+        # print "123456"
+        # print key
+        # print type(key)
+        # 因为allProperty函数传进去的参数是unicode，故要
+        # 把key从str转化为unicode
+        key = key.decode('utf-8')
+        # print type(key)
+        # print allProperty(key)
+        carsfigure[key] = allProperty(key)
+    # print "11111111111111111111111"
+    # print carsfigure
+    # print "singlefigure的参数是否已经传进来了"
     # 使用render_to_response不可以
     # 要使用HttpResponse才可以
-    return HttpResponse(json.dumps(dictproperty),
+    return HttpResponse(json.dumps(carsfigure),
                         content_type='application/json')
+
+# 用户只是选择属性，传给图表的数据
+
+
+def singlefigure1(request):
+    # 获取url中的参数（属性名）
+    print request.get_full_path()
+    property = request.GET.get('carproperty', '')
+    property = property.encode('utf-8')
+    dict = lookProperty(property)
+    return HttpResponse(json.dumps(dict), content_type='application')
+
+# 用户选择属性和汽车名后，传给图表的数据
+
+
+def singlefigure2(request):
+    # 获取url中的参数（汽车名和属性名）
+    dict1 = {}
+    print request.get_full_path()
+    # 获取参数并转码
+    name = request.GET.get('carname', '')
+    property = request.GET.get('carproperty', '')
+
+    print name, property
+    property = property.encode('utf-8')
+
+    # lookProperty是该property比较好的汽车名字和相应的属性值
+    dict1 = lookProperty(property)
+    print "dict1 \n"
+    print dict1
+    tmpname = recommand(name)
+    # allcars所有要展示的汽车的名字和其属性
+    allcars = {}
+    allcars[name] = allProperty(name)
+    for k, v in dict1:
+        tmpname.append(k)
+
+    # 给属性去重，因为根据属性的推荐和汽车名的推荐
+    # 可能会有重叠的汽车名
+    uniname = list(set(tmpname))
+    print "uniname\n"
+    print uniname
+    for key in uniname:
+        key = key.decode('utf-8')
+        allcars[key] = allProperty(key)
+    # for k, v in dict1:
+    #     print "3"
+    #     allcars[k] = allProperty(k)
+    print allcars
+    return HttpResponse(json.dumps(allcars), content_type='application')

@@ -10,10 +10,10 @@ from figure import*
 
 
 def carName(na):
-    # 根据函数
-    allProperty(na)
-    suggest(na)
-
+    # 测试函数
+    # allProperty(na)
+    # suggest(na)
+    # figureComment(na)
     # file_NV是汽车名和value值
     file_NV = file('/home/susu/Desktop/NewData/total.txt', 'r')
     # print "传入的参数是1:", na, "有没有空格啊"
@@ -48,17 +48,15 @@ def carName(na):
 # 当返回的value=''会发生这样的错误
 # invalid literal for int() with base 10: ''
 
-
+# ################################################
 # 根据用户选择的汽车的属性 做相应的处理
 
 
-def bigProperty(proper):
+def lookProperty(proper):
     # file_NPV是汽车名，大属性和value值
     file_NPV = file('/home/susu/Desktop/NewData/total_p.txt', 'r')
     # 把proper的编码unicode变成str
-    proper = proper.encode('utf-8')
     dict = {}
-    result = ''
     while True:
         # 逐行读取 并把每一行字符串变成list
         line = file_NPV.readline()
@@ -66,22 +64,99 @@ def bigProperty(proper):
         # 读到最后一行 结束
         if not line:
             break
-        if lineList[1] == proper and int(lineList[2]) > 0:
+        if lineList[1] == proper and int(lineList[2]) > 1:
             dict[lineList[0]] = lineList[2]
     # 给某一个特定的大属性的汽车名和vlaue值组成dict按照dict的value值排序
     # 返回排序的结果
     dict = sorted(dict.iteritems(), key=lambda d: d[1], reverse=True)
+    file_NPV.close()
+    return dict
+
+
+def bigProperty(proper):
+    proper = proper.encode('utf-8')
+    result = ''
+    # propertyInterval(proper)
+    dict = lookProperty(proper)
     if not dict:
         result = "暂时没有《" + proper + "》这方面比较好的车型"
     else:
         result = "《" + proper + "》这方面比较好的车型是：" + "\n"
         for key, val in dict:
             result += key + '\n\n'
-    file_NPV.close()
     return result
 
+# 根据属性给推荐的汽车，把该汽车所在的价格区间展示出来
+
+
+def propertyInterval(proper):
+    proper = proper.encode('utf-8')
+    # 文件w_P1和相应的价格区间对应表
+    dictRespon = {
+        1: "5w",
+        2: "5w-10",
+        3: "10w-15w",
+        4: "15w-20w",
+        5: "20w-25w",
+        6: "25w-30w",
+        7: "30w-35w",
+        8: "35w-50",
+        9: "50w-70w",
+        10: "70w-100w",
+        11: "100w"
+    }
+    dict = lookProperty(proper)
+
+    # dict_interval的key是汽车名，value是对应的汽车所在的价格区间
+    dict_interval = {}
+    # strResult存贮返回的值
+    strResult = ""
+    for key, val in dict:
+        num = 1
+        while True:
+            if num > 11:
+                break
+            # 使用从测试文件里提取出来的文件
+            fp = file(
+                "/home/susu/Desktop/NewData/crawler/w_P" + str(num) + ".txt", 'r')
+            #     dict_interval[key] = num
+            while True:
+                line = fp.readline()
+                # 去除每一行的空格
+                line = line.split()
+                line = ''.join(line)
+                # 读到最后一行 结束
+                if len(line) == 0:
+                    break
+                if key == line:
+                    dict_interval[key] = num
+            fp.close()
+            num = num + 1
+        # tmpFile.append(readfile(fp))
+    # dictstr是每个价格区间的评论
+    dictstr = {}
+    # 初始化dictstr
+    for x in range(1, 12):
+        dictstr[x] = ""
+    # print dictstr
+    # print dict_interval
+    for k, v in dict_interval.items():
+        for x in range(1, 12):
+            if x == v:
+                dictstr[x] += k + "     "
+    # print dictstr
+    for k, v in dictstr.items():
+        if v != "":
+            strResult += dictRespon[k] + ": " + v + "； "
+    # print "最终结果"
+    # print strResult
+    return strResult
+
+# ################################################
 
 # 根据用户选择的汽车名和属性名 做相应的处理
+
+
 def namePerperty(na, proper):
     # file_NPV是汽车名，大属性和value值
     file_NPV = file('/home/susu/Desktop/NewData/total_p.txt', 'r')
@@ -130,15 +205,65 @@ def score(name, proper, val):
 
 # print score(value)
 
+# 推荐同一个价位相同的其他汽车的相应的评论
+
 
 def suggest(na):
     # print "11111111111111111"
-    str = '同一个价位比较好的汽车有:'
+    str = '推荐：同一个价位比较好的汽车有:'
     nameslist = recommand(na)
-    print nameslist
+    # print nameslist
     # if not nameslist:
     #     str = '同一个价位比较好的汽车有:'
     for k in nameslist:
         str += k + "    "
-    print str
+    # print str
     return str
+
+
+# 给汽车的各个大属性做相应的评论
+def figureComment(na):
+    # strsum 是返回的评论
+    # str1_1是str1 一开始的一个备份
+    strsum = ''
+    str1 = "比较好的属性："
+    str1_1 = "比较好的属性："
+
+    str2 = "还行的属性："
+    str2_1 = "还行的属性："
+
+    str3 = "一般的属性："
+    str3_1 = "一般的属性："
+
+    str4 = "不太好的属性："
+    str4_1 = "不太好的属性："
+
+    str5 = "非常不好的属性："
+    str5_1 = "非常不好的属性："
+    dictfigure = allProperty(na)
+    for k, v in dictfigure.items():
+        print k, v
+        if v == 0:
+            str3 += k + "  "
+        elif v > 2:
+            str1 += k + "   "
+        elif v > 0:
+            str2 += k + "   "
+        elif v < -2:
+            str5 += k + "   "
+        elif v < 0:
+            str4 += k + "   "
+    # print str1, str2, str3, str4, str5
+    if str1 != str1_1:
+        strsum += str1 + "。"
+    if str2 != str2_1:
+        strsum += str2 + "。"
+    if str4 != str4_1:
+        strsum += str4 + "。"
+    if str5 != str5_1:
+        strsum += str5 + "。"
+    if str3 != str3_1:
+        strsum += str3 + "。"
+    # print "12345667"
+    # print strsum
+    return strsum

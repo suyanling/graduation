@@ -60,6 +60,7 @@
 	}
 	.comments {
 		margin-top: 20px;
+		font-size: 16px;
 	}
 	.panel-body {
 		height: 200px;
@@ -147,7 +148,7 @@
 		<form role="form"  action = '' method="get">
 			<div class="col-lg-5">
 				<div class="input-group">
-					<input type="text" class="form-control userchoose" aria-label="..." placeholder="请选择汽车名"  name="nameS">
+					<input type="text" class="form-control userchoose choosename" aria-label="..." placeholder="请选择汽车名"  name="nameS" >
 					<div class="input-group-btn">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 							汽车名
@@ -294,7 +295,7 @@
 		</div>
 		<div class="col-lg-5">
 			<div class="input-group">
-				<input type="text" class="form-control userchoose" aria-label="..." placeholder="请选择属性名" name="propertyS">
+				<input type="text" class="form-control userchoose  chooseproperty" aria-label="..." placeholder="请选择属性名" name="propertyS">
 				<div class="input-group-btn">
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 						属性名
@@ -317,7 +318,7 @@
 	<h3 class="selectINFO">
 		您的选择是：
 		<span class="label label-default" id="selectName">{{nameS}}</span>
-		<span class="label label-default">{{propertyS}}</span>
+		<span class="label label-default" id="selectProperty">{{propertyS}}</span>
 	</h3>
 	<!-- <h2>你的选择是：{{panelContent}}</h2>
 -->
@@ -326,12 +327,41 @@
 		<div  id="literal_s"></div>
 		<h3 class="panel-title">文字评论</h3>
 	</div>
-	<div class="panel-body">{{panelContent}}</div>
+	<!--
+	panelContent是之前写的简单的评论
+	contentFigures是选择汽车名字时，对其所有的属性的一个分析的评论
+	contentCommet是推荐该款汽车同一价位的其他汽车
+	contentCommetP是推荐该属性比较好的汽车名字
+	contentInterval是选择属性，推荐该属性比较好的汽车，所在的价格区间
+	  -->
+	<div class="panel-body">
+		<p>{{panelContent}}</p>
+		<p>{{contentFigures}}</p>
+		<p>{{contentCommetP}}</p>
+		<p>{{contentInterval}}</p>
+		<p>{{contentCommet}}</p>
+	</div>
 </div>
-<div class="graphic">
-	<h3>汽车的各个属性（没显示的属性的值为0）</h3>
+<!-- 当用户只是选择汽车名时，图表的展示方式 -->
+<div class="graphic graphicName">
+	<!-- <h3>汽车的各个属性（没显示的属性的值为0）</h3> -->
+	<h3>汽车：<span class="label label-default">{{nameS}}</span></h3>
+	<h3 class="recomNames">推荐的同等价位的汽车属性展示如下：</h3>
 <!-- 	<div>{{figure}}</div> -->
 	<div id="Chart1"></div>
+</div>
+<!-- 当用户只是选择属性时，图表的展示方式 -->
+<div class="graphic graphicFeature" style="display:none">
+	<h3 class="recomProperty"><span class="label label-default">{{propertyS}}</span> 比较好的汽车：</h3>
+	<h3>他们的分值高低如下图所示：</h3>
+<!-- 	<div>{{figure}}</div> -->
+	<div id="Chart2"></div>
+</div>
+<div class="graphic graphicAll" style="display:none">
+	<h3 class="recomNames">推荐的汽车：</h3>
+	<h3>汽车属性展示如下：</h3>
+<!-- 	<div>{{figure}}</div> -->
+	<div id="Chart3"></div>
 </div>
 </div>
 <!-- <div id="literal_s">

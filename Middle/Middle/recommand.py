@@ -65,9 +65,9 @@ def recommand(na):
     tmpname = []
     num = 1
     for k, v in dict1:
-        if num > 3:
+        if num > 5:
             break
-        if v > 0:
+        if v > 1:
             tmpname.append(k)
         num = num + 1
     return tmpname
