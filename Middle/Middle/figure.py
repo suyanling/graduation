@@ -41,7 +41,7 @@ def allProperty(na):
                 value3 = int(lineList[2])
             elif lineList[1] == '油耗':
                 value4 = int(lineList[2])
-            elif lineList[1] == '舒适性':
+            elif lineList[1] == '舒适度':
                 value5 = int(lineList[2])
             elif lineList[1] == '外观':
                 value6 = int(lineList[2])

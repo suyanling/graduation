@@ -46,6 +46,10 @@ def recommand(na):
     na = na.encode('utf-8')
     # 存放name 跟 value
     dict = {}
+    # navalue 原来汽车对应的value
+    # 跟原来的汽车差不多，或者是比原来的汽车更好才推荐
+    # 而且，推荐前5个，也就是最好的5个
+    navalue = 0
     tmppath = price(na)
     for path in tmppath:
         files = file(path, 'r')
@@ -59,15 +63,19 @@ def recommand(na):
                 break
             if lineList[0] not in dict and lineList[0] != na:
                 dict[lineList[0]] = int(lineList[1])
-
+            if lineList[0] == na:
+                navalue = int(lineList[1])
     # 给dict根据value值排序,前五的汽车
     dict1 = sorted(dict.iteritems(), key=lambda d: d[1], reverse=True)
+    print "OH MY GOD"
+    print navalue
+    print "OH MY GOD"
     tmpname = []
     num = 1
     for k, v in dict1:
         if num > 5:
             break
-        if v > 1:
+        if v > 1 and v >= navalue:
             tmpname.append(k)
         num = num + 1
     return tmpname

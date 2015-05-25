@@ -261,25 +261,25 @@ $(document).ready(function() {
 			// option on the series option.  Here a series option object
 			// is specified for each series.
 			series: [{
-				label: '空间'
-			}, {
-				label: '动力'
-			}, {
-				label: '操控'
-			}, {
-				label: '油耗'
-			}, {
-				label: '舒适性'
-			}, {
-				label: '外观'
+				label: '售后'
 			}, {
 				label: '内饰'
 			}, {
-				label: '性价比'
-			}, {
-				label: '售后'
+				label: '外观'
 			}, {
 				label: '安全性'
+			}, {
+				label: '空间'
+			}, {
+				label: '油耗'
+			}, {
+				label: '动力'
+			}, {
+				label: '性价比'
+			}, {
+				label: '操控'
+			}, {
+				label: '舒适性'
 			}],
 			// Show the legend and put it outside the grid, but inside the
 			// plot container, shrinking the grid to accomodate the legend.

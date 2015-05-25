@@ -65,7 +65,7 @@ def lookProperty(proper):
         if not line:
             break
         if lineList[1] == proper and int(lineList[2]) > 1:
-            dict[lineList[0]] = lineList[2]
+            dict[lineList[0]] = int(lineList[2])
     # 给某一个特定的大属性的汽车名和vlaue值组成dict按照dict的value值排序
     # 返回排序的结果
     dict = sorted(dict.iteritems(), key=lambda d: d[1], reverse=True)
@@ -73,18 +73,65 @@ def lookProperty(proper):
     return dict
 
 
-def bigProperty(proper):
+# bigProperty的作用
+# 用户只是选择属性时，推荐该属性比较好的汽车的类型
+# 用户选择汽车名和属性时，推荐比该汽车的属性更好的汽车类型
+
+
+def bigProperty(proper, na):
     proper = proper.encode('utf-8')
     result = ''
     # propertyInterval(proper)
     dict = lookProperty(proper)
+    # str1是存储非常好的车型（也就是value大于2的车型）
+    # str 是存贮比较好的车型（也就是大于1的车型）
+    # str3,str4相当于str1和str2
+    # str1和str2是用户只是选择属性时起作用
+    # str3和str4是用户同时选择属性和名字
+    str1 = ""
+    str2 = ""
+    str3 = ""
+    str4 = ""
+    for key, val in dict:
+        if val > 2:
+            str1 += key + "  "
+        else:
+            str2 += key + "  "
     if not dict:
         result = "暂时没有《" + proper + "》这方面比较好的车型"
     else:
-        result = "《" + proper + "》这方面比较好的车型是：" + "\n"
-        for key, val in dict:
-            result += key + '\n\n'
-    return result
+        if na == "":
+            result = "《" + proper + "》这方面"
+            if str1 != "":
+                str1 = "非常的车型是：" + str1 + ","
+            if str2 != "":
+                str2 = "比较好的车型是:" + str2+'\n'
+            result = str1 + str2
+            return result
+        else:
+            # allProperty(na)返回na的所有的属性和对应的value值
+            dictproperty = allProperty(na)
+            # pvalue = proper对应的value值
+            pvalue = 0
+            for k, v in dictproperty.items():
+                if k == proper:
+                    pvalue = v
+            na = na.encode('utf-8')
+            print "pvalue-----------------------------"
+            print pvalue
+            print "pvalue-----------------------------"
+            for key, val in dict:
+                if key != na and val >= pvalue:
+                    if val > 2:
+                        str3 += key + "  "
+                    else:
+                        str4 += key + "  "
+            if str3 != "":
+                str3 = "比"+na+"的"+proper+"好很多的车型是：" + str3 + ","
+            if str4 != "":
+                str4 = "比"+na+"的"+proper+"好一些或者相当的车型是：" + str4 + ","
+            result = str3 + str4
+            return result
 
 # 根据属性给推荐的汽车，把该汽车所在的价格区间展示出来
 
@@ -210,7 +257,7 @@ def score(name, proper, val):
 
 def suggest(na):
     # print "11111111111111111"
-    str = '推荐：同一个价位比较好的汽车有:'
+    str = '推荐：同一个价位，跟它相当或比它好的汽车有:'
     nameslist = recommand(na)
     # print nameslist
     # if not nameslist:
@@ -226,23 +273,23 @@ def figureComment(na):
     # strsum 是返回的评论
     # str1_1是str1 一开始的一个备份
     strsum = ''
-    str1 = "比较好的属性："
-    str1_1 = "比较好的属性："
+    str1 = "非常好的属性："
+    str1_1 = "非常好的属性："
 
-    str2 = "还行的属性："
-    str2_1 = "还行的属性："
+    str2 = "比较好的属性："
+    str2_1 = "比较好的属性："
 
     str3 = "一般的属性："
     str3_1 = "一般的属性："
 
-    str4 = "不太好的属性："
-    str4_1 = "不太好的属性："
+    str4 = "不好的属性："
+    str4_1 = "不好的属性："
 
     str5 = "非常不好的属性："
     str5_1 = "非常不好的属性："
     dictfigure = allProperty(na)
     for k, v in dictfigure.items():
-        print k, v
+        # print k, v
         if v == 0:
             str3 += k + "  "
         elif v > 2:

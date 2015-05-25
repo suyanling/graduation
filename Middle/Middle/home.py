@@ -85,7 +85,7 @@ def form1(request):
         #     nameProper = namePerperty(names, propertys)
         #     context['panelContent'] = nameProper
         if not names:
-            proper = bigProperty(propertys)
+            proper = bigProperty(propertys, "")
             # print "proper", proper
             context['panelContent'] = proper
             context['contentInterval'] = "价格区间： "+interval
@@ -97,7 +97,10 @@ def form1(request):
         else:
             # context['panelContent'] = "抱歉，暂时没有这方面的信息。"
             nameProper = namePerperty(names, propertys)
-            proper = bigProperty(propertys)
+            proper = bigProperty(propertys, names)
+            print "xxxxxxxxxxxxxxxxxxxxxxxxx"
+            print proper
+            print "xxxxxxxxxxxxxxxxxxxxxxxxx"
             context['contentCommetP'] = proper
             context['contentCommet'] = commet
             context['contentInterval'] = "价格区间： "+interval
@@ -203,8 +206,8 @@ def singlefigure2(request):
 
     # lookProperty是该property比较好的汽车名字和相应的属性值
     dict1 = lookProperty(property)
-    print "dict1 \n"
-    print dict1
+    # print "dict1 \n"
+    # print dict1
     tmpname = recommand(name)
     # allcars所有要展示的汽车的名字和其属性
     allcars = {}
@@ -215,13 +218,13 @@ def singlefigure2(request):
     # 给属性去重，因为根据属性的推荐和汽车名的推荐
     # 可能会有重叠的汽车名
     uniname = list(set(tmpname))
-    print "uniname\n"
-    print uniname
+    # print "uniname\n"
+    # print uniname
     for key in uniname:
         key = key.decode('utf-8')
         allcars[key] = allProperty(key)
     # for k, v in dict1:
     #     print "3"
     #     allcars[k] = allProperty(k)
-    print allcars
+    # print allcars
     return HttpResponse(json.dumps(allcars), content_type='application')
