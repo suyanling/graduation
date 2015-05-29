@@ -1,0 +1,94 @@
+li{list-style:none}
+body{
+	position: relative;
+}
+.sections {
+	margin-bottom: 30px;
+}
+#navbar_su {
+	width: 200px;
+	position: absolute;
+	left: 30px;
+	top:230px;
+	/*position: relative;*/
+}
+#navbar_su nav {
+	/*position: fixed;
+	top:20px;*/
+}
+#navbar_su a {
+	color: #767676;
+}
+#ads {
+	background: #6f5499;
+	width: 100%;
+	height: 200px;
+	position: relative;
+}
+#ads  h1{
+	position: absolute;
+	color: #cdbfe3;
+	left:50%;
+	top:60px;
+	margin-left: -120px;
+}
+.nav .active {
+	display: block;
+}
+.nav_taggle ul {
+	margin-left: 15px;
+}
+#c_content {
+	width: 60%;
+	/*text-align: center;*/
+	margin-left: 25%;
+}
+.page-header {
+	border-bottom: 1px solid #eee;
+	/*color: #767676;*/
+}
+.comments {
+	margin-top: 20px;
+	font-size: 16px;
+}
+.panel-body {
+	height: 200px;
+}
+.selectitem {
+	margin-top: 20px;
+	width: 200px;
+	margin-left: 15px;
+}
+.a_delete {
+	margin-right: 20px;
+}
+.a_delete:hover{
+	text-decoration: none;
+}
+.a_delete:visited{
+	text-decoration: none;
+}
+.a_delete:link{
+	text-decoration: none;
+}
+.backToTop {
+	position: fixed;
+	left:20px;
+	bottom: 20px;
+}
+.nav_taggle .select a{
+	color: #767676;
+}
+
+/*
+多产品部分的
+ */
+#selectNames {
+	width: 500px;
+}
+#selectNames span{
+	padding: 5px;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 10px;
+}
