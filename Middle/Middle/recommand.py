@@ -67,9 +67,9 @@ def recommand(na):
                 navalue = int(lineList[1])
     # 给dict根据value值排序,前五的汽车
     dict1 = sorted(dict.iteritems(), key=lambda d: d[1], reverse=True)
-    print "OH MY GOD"
-    print navalue
-    print "OH MY GOD"
+    # print "OH MY GOD"
+    # print navalue
+    # print "OH MY GOD"
     tmpname = []
     num = 1
     for k, v in dict1:

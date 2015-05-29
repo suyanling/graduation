@@ -98,9 +98,6 @@ def form1(request):
             # context['panelContent'] = "抱歉，暂时没有这方面的信息。"
             nameProper = namePerperty(names, propertys)
             proper = bigProperty(propertys, names)
-            print "xxxxxxxxxxxxxxxxxxxxxxxxx"
-            print proper
-            print "xxxxxxxxxxxxxxxxxxxxxxxxx"
             context['contentCommetP'] = proper
             context['contentCommet'] = commet
             context['contentInterval'] = "价格区间： "+interval
@@ -123,7 +120,6 @@ def form1(request):
 
 def form2(request):
     pass
-
 # 单独请求图表展示产品的属性
 # 那么用户的点击两次，进行两次查询。一次是表单提交查询，一次是查看图表显示
 # 所以不考虑这个方法
@@ -228,3 +224,55 @@ def singlefigure2(request):
     #     allcars[k] = allProperty(k)
     # print allcars
     return HttpResponse(json.dumps(allcars), content_type='application')
+
+# 对多产品的操作
+
+
+def mutifigure(request):
+    print request.get_full_path()
+    name = request.GET.get('carnames', '')
+    # name = name.encode('utf-8')
+    namelist = name.split(" ")
+    # commentM返回的是选中的汽车和相应的value值，carvalues是根据value值排好序的
+    carvalues = commentM(namelist)
+    # 对选中的汽车的整体的分析
+    str1 = "汽车整体的从好到坏的排序如下："
+    for k, v in carvalues:
+        str1 += k + "   "
+    print str1
+    # print namelist
+    allcars = {}
+    for key in namelist:
+        allcars[key] = allProperty(key)
+        allcars["0"] = str1
+    return HttpResponse(json.dumps(allcars), content_type='application')
+
+# 多产品的评论
+
+
+def commentM(namelist):
+    carvalue = {}
+    for key in namelist:
+        key = key.encode('utf-8')
+        value = carValue(key)
+        carvalue[key] = value
+    # print carvalue
+    print carvalue
+    dict1 = sorted(carvalue.iteritems(), key=lambda d: d[1], reverse=True)
+    return dict1
+
+# 根据汽车名返回相应的value值
+
+
+def carValue(name):
+    value = 0
+    fp = file("/home/susu/Desktop/NewData/total.txt", 'r')
+    while True:
+        line = fp.readline()
+        if len(line) == 0:
+            break
+        lines = line.split()
+        if lines[0] == name:
+            value = int(lines[1])
+    print name, value
+    return value

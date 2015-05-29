@@ -117,9 +117,9 @@ def bigProperty(proper, na):
                 if k == proper:
                     pvalue = v
             na = na.encode('utf-8')
-            print "pvalue-----------------------------"
-            print pvalue
-            print "pvalue-----------------------------"
+            # print "pvalue-----------------------------"
+            # print pvalue
+            # print "pvalue-----------------------------"
             for key, val in dict:
                 if key != na and val >= pvalue:
                     if val > 2:

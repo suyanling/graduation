@@ -156,6 +156,9 @@ $(document).ready(function() {
 		});
 	}
 
+	if(name == "汽车名" && property == "属性名") {
+		$('.graphicAll').hide();
+	}
 	function pirture(chart, ret) {
 		/****************************/
 		/*
@@ -185,12 +188,19 @@ $(document).ready(function() {
 		// Can specify a custom tick Array.
 		// Ticks should match up one for each y value (category) in the series.
 		var ticks = [];
+		var strM = "";
 		var figuredata = [];
 		var i = 1;
 		var innername = '';
 		for (var key in ret) {
 			console.log(key);
-			ticks.push(key);
+			// 针对多产品做的一些特殊的处理
+			if (key == "0") {
+				strM = "HELLO";
+				console.log(ret[key]);
+			}else{
+				ticks.push(key);
+			}
 			// 其他推荐的汽车名
 			if (key != name) {
 				innername += '<span class="label label-default">' + key + '</span>' + '	';
@@ -219,12 +229,16 @@ $(document).ready(function() {
 			// console.log(item);
 			var tmparray = []
 				// console.log(ret[i]);
-			$.each(item, function(j, item) {
-				// console.log(j);
-				// console.log(item);
-				tmparray.push(item);
-			});
-			figuredata.push(tmparray);
+			if (i == "0") {
+				console.log("OOOOO");
+			} else {
+				$.each(item, function(j, item) {
+					// console.log(j);
+					// console.log(item);
+					tmparray.push(item);
+				});
+				figuredata.push(tmparray);
+			}
 		});
 		console.log(figuredata)
 			/*
@@ -309,7 +323,30 @@ $(document).ready(function() {
 				background: "#FFF"
 			}
 		});
+		// 给图像重绘
+		plot1.replot();
 	}
+	/*
+	对多产品进行操作
+	 */
+	$("#submitM").click(function() {
+		var carnames = $('#selectNames span').text();
+		console.log(carnames);
+		carnamesarray = carnames.split(" ");
+		carnamesarray.pop(" ");
+		if (carnamesarray.length < 2) {
+			alert("至少选择两个产品！")
+			return;
+		}
+		if (carnames == "") {
+			alert("请选择汽车名！");
+		} else {
+			$.getJSON('/mutifigure/?carnames=' + carnames, function(ret) {
+				console.log(ret);
+				pirture('chart4', ret);
 
+			});
+		}
 
+	});
 });
