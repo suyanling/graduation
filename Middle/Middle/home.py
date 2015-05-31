@@ -235,16 +235,53 @@ def mutifigure(request):
     namelist = name.split(" ")
     # commentM返回的是选中的汽车和相应的value值，carvalues是根据value值排好序的
     carvalues = commentM(namelist)
+    # 汽车的价格区间
+    str0 = "汽车对应的价格区间: "
     # 对选中的汽车的整体的分析
     str1 = "汽车整体的从好到坏的排序如下："
+    # 汽车好坏的相应程度
+    str2 = "好坏的相应的程度：  "
+    # 返回总的评论
+    reslut = ""
+    # 汽车及其相应的value值
+    allcars = {}
     for k, v in carvalues:
         str1 += k + "   "
-    print str1
-    # print namelist
-    allcars = {}
-    for key in namelist:
-        allcars[key] = allProperty(key)
-        allcars["0"] = str1
+        str2 += valuedegree(v)+"    "
+        str0 += nameInterval(k) + "    "
+        k = k.decode('utf-8')
+        allcars[k] = allProperty(k)
+    reslut += str0+'\n'+str1+'\n'+str2+"\n"+"各大属性比较情况如下："+"\n"
+    listp = []
+    # propertyList存放11个大属性的一个数组
+    propertyList = []
+    i = 0
+    for key, val in allcars.items():
+        tmplist = []
+        for p, v in val.items():
+            print p, v, valuedegree(v)
+            tmplist.append(valuedegree(v))
+            if i < 1:
+                propertyList.append(p)
+        i = i + 1
+        listp.append(tmplist)
+    for num in range(propertyList.__len__()):
+        strp = propertyList[num] + ": "
+        for key in listp:
+            strp += key[num]
+        reslut += strp + "\n"
+    print "//////////////////////////////"
+    print propertyList.__len__()
+    print reslut
+    # print val[p]
+    #     pass
+    # # print namelist
+    # for key,v in carvalues:
+    #     key = key.decode(utf-8)
+    # for key in namelist:
+    #     allcars[key] = allProperty(key)
+    #     allcars["0"] = str1
+    allcars["0"] = reslut
     return HttpResponse(json.dumps(allcars), content_type='application')
 
 # 多产品的评论
@@ -276,3 +313,60 @@ def carValue(name):
             value = int(lines[1])
     print name, value
     return value
+
+# 根据value值返回相应的程度词
+
+
+def valuedegree(val):
+    if val >= 3:
+        return "非常好。"
+    elif val <= -3:
+        return "非常差。"
+    elif val == 2:
+        return "比较好。"
+    elif val == 1:
+        return "挺好。"
+    elif val == 0:
+        return "一般。"
+    elif val == -1:
+        return "不好。"
+    elif val == -2:
+        return "很不好。"
+
+# 根据汽车名返回的所在的价格区间
+
+
+def nameInterval(name):
+    # 文件w_P1和相应的价格区间对应表
+    dictRespon = {
+        1: "5w",
+        2: "5w-10",
+        3: "10w-15w",
+        4: "15w-20w",
+        5: "20w-25w",
+        6: "25w-30w",
+        7: "30w-35w",
+        8: "35w-50",
+        9: "50w-70w",
+        10: "70w-100w",
+        11: "100w"
+    }
+    num = 1
+    while True:
+        if num > 11:
+            break
+        # 使用从测试文件里提取出来的文件
+        fp = file(
+            "/home/susu/Desktop/NewData/crawler/w_P" + str(num) + ".txt", 'r')
+        while True:
+            line = fp.readline()
+            # 去除每一行的空格
+            line = line.split()
+            line = ''.join(line)
+            # 读到最后一行 结束
+            if len(line) == 0:
+                break
+            if name == line:
+                return dictRespon[num]
+        fp.close()
+        num = num + 1

@@ -140,8 +140,8 @@ def propertyInterval(proper):
     proper = proper.encode('utf-8')
     # 文件w_P1和相应的价格区间对应表
     dictRespon = {
-        1: "5w",
-        2: "5w-10",
+        1: "5w以下",
+        2: "5w-10w",
         3: "10w-15w",
         4: "15w-20w",
         5: "20w-25w",
@@ -150,7 +150,7 @@ def propertyInterval(proper):
         8: "35w-50",
         9: "50w-70w",
         10: "70w-100w",
-        11: "100w"
+        11: "100w及以上"
     }
     dict = lookProperty(proper)
 
@@ -195,8 +195,8 @@ def propertyInterval(proper):
     for k, v in dictstr.items():
         if v != "":
             strResult += dictRespon[k] + ": " + v + "； "
-    # print "最终结果"
-    # print strResult
+    print "最终结果"
+    print strResult
     return strResult
 
 # ################################################
