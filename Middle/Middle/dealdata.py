@@ -195,8 +195,8 @@ def propertyInterval(proper):
     for k, v in dictstr.items():
         if v != "":
             strResult += dictRespon[k] + ": " + v + "； "
-    print "最终结果"
-    print strResult
+    # print "最终结果"
+    # print strResult
     return strResult
 
 # ################################################

@@ -8,9 +8,6 @@ from Middle.recommand import*
 from django.http import JsonResponse
 import json
 
-# NAMES = ""
-# 读取文件的信息
-
 
 def readfile(fp):
     temp = []
@@ -49,14 +46,9 @@ def getContext():
     # context 就是一个dict. name是模板的变量,value就是要替换模板变量的值
     context['property'] = property
     return context
-    # return render_to_response('home.html', context)
 
 
 def home(request):
-    # NAMES = request.GET.get('nameS', '')
-    # singlefigure(NAMES)
-    # print NAMES
-    # print request.GET.get['nameS', '']
     return form1(request)
 
 # 这是对第一个表单的提交的数据进行处理
@@ -134,7 +126,7 @@ def form2(request):
 
 def singlefigure(request):
     # 活取url中的参数（汽车名）
-    print request.get_full_path()
+    # print request.get_full_path()
     name = request.GET.get('carname', '')
 
     # carsfigure 存贮自身和相应推荐的汽车的属性
@@ -180,7 +172,7 @@ def singlefigure(request):
 
 def singlefigure1(request):
     # 获取url中的参数（属性名）
-    print request.get_full_path()
+    # print request.get_full_path()
     property = request.GET.get('carproperty', '')
     property = property.encode('utf-8')
     dict = lookProperty(property)
@@ -192,12 +184,12 @@ def singlefigure1(request):
 def singlefigure2(request):
     # 获取url中的参数（汽车名和属性名）
     dict1 = {}
-    print request.get_full_path()
+    # print request.get_full_path()
     # 获取参数并转码
     name = request.GET.get('carname', '')
     property = request.GET.get('carproperty', '')
 
-    print name, property
+    # print name, property
     property = property.encode('utf-8')
 
     # lookProperty是该property比较好的汽车名字和相应的属性值
@@ -229,7 +221,7 @@ def singlefigure2(request):
 
 
 def mutifigure(request):
-    print request.get_full_path()
+    # print request.get_full_path()
     name = request.GET.get('carnames', '')
     # name = name.encode('utf-8')
     namelist = name.split(" ")
@@ -245,13 +237,15 @@ def mutifigure(request):
     reslut = ""
     # 汽车及其相应的value值
     allcars = {}
+    strcars = ""
     for k, v in carvalues:
         str1 += k + "   "
+        strcars += k + "   "
         str2 += valuedegree(v)+"    "
         str0 += nameInterval(k) + "    "
         k = k.decode('utf-8')
         allcars[k] = allProperty(k)
-    reslut += str0+'\n'+str1+'\n'+str2+"\n"+"各大属性比较情况如下："+"\n"
+    reslut += "("+strcars+")"+str0+'\n'+"("+strcars+")"+str1+'\n'+"("+strcars+")"+str2+"\n"+"("+strcars+")"+"各大属性比较情况如下："+"\n"
     listp = []
     # propertyList存放11个大属性的一个数组
     propertyList = []
@@ -259,7 +253,7 @@ def mutifigure(request):
     for key, val in allcars.items():
         tmplist = []
         for p, v in val.items():
-            print p, v, valuedegree(v)
+            # print p, v, valuedegree(v)
             tmplist.append(valuedegree(v))
             if i < 1:
                 propertyList.append(p)
@@ -270,9 +264,9 @@ def mutifigure(request):
         for key in listp:
             strp += key[num]
         reslut += strp + "\n"
-    print "//////////////////////////////"
-    print propertyList.__len__()
-    print reslut
+    # print "//////////////////////////////"
+    # print propertyList.__len__()
+    # print reslut
     # print val[p]
     #     pass
     # # print namelist
@@ -294,7 +288,7 @@ def commentM(namelist):
         value = carValue(key)
         carvalue[key] = value
     # print carvalue
-    print carvalue
+    # print carvalue
     dict1 = sorted(carvalue.iteritems(), key=lambda d: d[1], reverse=True)
     return dict1
 
@@ -311,7 +305,7 @@ def carValue(name):
         lines = line.split()
         if lines[0] == name:
             value = int(lines[1])
-    print name, value
+    # print name, value
     return value
 
 # 根据value值返回相应的程度词

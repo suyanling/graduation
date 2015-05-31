@@ -57,7 +57,7 @@ $(document).ready(function() {
 			if (target != "") {
 				// target.text(tmp);
 				var carnames = $('#selectNames span').text();
-				console.log(carnames);
+				// console.log(carnames);
 				carnames = carnames.split(" ");
 				// carnames.pop();
 				// 判断用户是否已经选择该产品？是：添加；不是：不添加
@@ -91,7 +91,7 @@ $(document).ready(function() {
 	 */
 	$("#selectNames").on("click","span",function(event){
 		var carnames = $('#selectNames span').text();
-		console.log($(this).text());
+		// console.log($(this).text());
 		// 在DOM结构中删除元素，在原来的数组
 		$(this).remove();
 		// carnames = carnames.split(" ");

@@ -122,15 +122,15 @@ $(document).ready(function() {
 			/*
 			先检验返回的数据是什么样的格式，再根据相应的数据结果处理
 			 */
-			console.log(ret[0][0]);
-			console.log(ret);
+			// console.log(ret[0][0]);
+			// console.log(ret);
 			var arrayfigure = [];
 			for (var i = 0; i < ret.length; i++) {
 				innername += '<span class="label label-default">' + ret[i][0] + '</span>' + '	';
 				var tmparray = [];
 				tmparray.push(ret[i][0]);
 				tmparray.push(parseInt(ret[i][1]));
-				console.log(tmparray);
+				// console.log(tmparray);
 				arrayfigure.push(tmparray);
 			}
 			$('.recomProperty').append(innername);
@@ -193,19 +193,60 @@ $(document).ready(function() {
 			var figuredata = [];
 			var i = 1;
 			var innername = '';
+			/*
+			设置一个flag标注，用户选择的单产品，还是多产品
+			再分别对他们进行
+			 */
+			var flag = false;
 			for (var key in ret) {
-				console.log(key);
+				if (key == "0") {
+					flag = true;
+				}
+			}
+			for (var key in ret) {
+				// console.log(key);
 				// 针对多产品做的一些特殊的处理
+				// key == "0"是后台与前台的一个对应的接口
 				if (key == "0") {
 					strM = "HELLO";
-					console.log(ret[key]);
-					$('#commentM').text(ret[key]);
+					// console.log(ret[key]);
+					$('.panel_contentM').text(" ");
+					// 对字符串ret[key]进行分解，主要是为了展示的时候好看一点
+					var tmplist = ret[key].split("\n");
+					// console.log(tmplist);
+					var inner = "";
+					for(var key in tmplist)  {
+						inner += '<p>' + tmplist[key] + '</p>';
+					}
+					// $('#commentM').text(ret[key]);
+					// $('#commentM').append(inner);
+					$('.panel_contentM').append(inner);
+					/*
+					if 评论里面的内容高于200px，则面板的高度自动适应
+					else 面板的高度固定在200px，这样做主要是为了美观
+	 				*/
+					var height = $('.panel_contentM').height();
+					if (height > 200) {
+						$('.panel_contentM').parent().height("auto");
+					}
 				} else {
 					ticks.push(key);
 				}
 				// 其他推荐的汽车名
-				if (key != name) {
+				if (key != name && !flag) {
 					innername += '<span class="label label-default">' + key + '</span>' + '	';
+				}
+				if(!flag) {
+					/*
+					单产品的文字评论的高度设置。
+					默认为200px；
+					内容大于200px，则高度自动适应
+					 */
+					var heightS = $('.panel_contentS').height();
+					// console.log(heightS);
+					if(heightS > 200){
+						$('.panel_contentS').parent().height("auto");
+					}
 				}
 				/* 
 				这样得到的figuredata是包含是个数组的数组
@@ -232,7 +273,7 @@ $(document).ready(function() {
 				var tmparray = []
 					// console.log(ret[i]);
 				if (i == "0") {
-					console.log("OOOOO");
+					// console.log("OOOOO");
 				} else {
 					$.each(item, function(j, item) {
 						// console.log(j);
@@ -242,7 +283,7 @@ $(document).ready(function() {
 					figuredata.push(tmparray);
 				}
 			});
-			console.log(figuredata)
+			// console.log(figuredata)
 				/*
 				把数组figuredata的行和列翻转
 				 */
@@ -257,7 +298,7 @@ $(document).ready(function() {
 				}
 				// console.log(s1);
 			}
-			console.log(arrayfigure);
+			// console.log(arrayfigure);
 			/*
 			为什么直接使用datafigure数组这样的格式不可以不可以
 			一定要使用[s1, s2, s3,s4,s5,s6,s7,s8,s9,s10]
@@ -333,7 +374,7 @@ $(document).ready(function() {
 		 */
 	$("#submitM").click(function() {
 		var carnames = $('#selectNames span').text();
-		console.log(carnames);
+		// console.log(carnames);
 		carnamesarray = carnames.split(" ");
 		carnamesarray.pop(" ");
 		if (carnamesarray.length < 2) {
@@ -344,11 +385,14 @@ $(document).ready(function() {
 			alert("请选择汽车名！");
 		} else {
 			$.getJSON('/mutifigure/?carnames=' + carnames, function(ret) {
-				console.log(ret);
+				// console.log(ret);
 				pirture('chart4', ret);
 
 			});
 		}
 
 	});
+
+
+
 });
