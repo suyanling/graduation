@@ -35,14 +35,28 @@
 			<li role="presentation" class="nav_taggle">
 				<a href="#Muti">多产品</a>
 				<ul class="nav" style="display: none" >
-					<li>
+					<!-- <li>
 						<a href="#select_m">选择</a>
-					</li>
+					</li> -->
 					<li>
 						<a href="#literal_m">文字</a>
 					</li>
 					<li>
-						<a href="#figure_m">图像</a>
+						<a href="#figure_m">图表</a>
+					</li>
+				</ul>
+			</li>
+			<li role="presentation" class="nav_taggle">
+				<a href="#MutiPro">多属性</a>
+				<ul class="nav" style="display: none" >
+					<!-- <li>
+						<a href="#select_m">选择</a>
+					</li> -->
+					<li>
+						<a href="#literal_mp">文字</a>
+					</li>
+					<li>
+						<a href="#figure_mp">图表</a>
 					</li>
 				</ul>
 			</li>
@@ -262,6 +276,7 @@
 		</div>
 	</div>
 </div>
+
 <!-- 当用户只是选择汽车名时，图表的展示方式 -->
 <div class="graphic graphicName" style="display:none">
 	<!-- <h3>汽车的各个属性（没显示的属性的值为0）</h3> -->
@@ -283,187 +298,249 @@
 <!-- 	<div>{{figure}}</div> -->
 	<div id="Chart3"></div>
 </div>
-</div>
-<!-- <div id="literal_s">
-<h1 class="page-header">文字</h1>
-</div>
-<div id="figure_s">
-<h1 class="page-header">图像</h1>
-</div>
--->
-<div id="Muti" class="sections">
-	<h1 class="page-header">多产品</h1>
-<!-- 	<form role="form"> -->
-	<div class="col-lg-5">
-	<div class="input-group">
-		<input type="text" class="form-control userchoose" aria-label="..." placeholder="请选择汽车名">
-		<div class="input-group-btn">
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-				汽车名
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu dropdown-menu-right my_ullist_m" role="menu">
-							<!-- {% for price in price %}
+	</div>
+	<div id="Muti" class="sections">
+		<h1 class="page-header">多产品</h1>
+	<!-- 	<form role="form"> -->
+		<div class="col-lg-5">
+		<div class="input-group">
+			<input type="text" class="form-control userchoose" aria-label="..." placeholder="请选择汽车名">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+					汽车名
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-right my_ullist_m" role="menu">
+								<!-- {% for price in price %}
+								<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">{{price}}</a>
+								<ul style="display: none" >
+									{% for priceW in  priceW %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{priceW}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							{% endfor %} -->
 							<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">{{price}}</a>
-							<ul style="display: none" >
-								{% for priceW in  priceW %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{priceW}}</a>
-								</li>
-								{% endfor %}
-							</ul>
+								<a href="javascript:void(0)">5W</a>
+								<ul style="display: none" >
+									{% for price1 in  price1 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price1}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">5w-10w</a>
+								<ul style="display: none" >
+									{% for price2 in price2 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price2}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">10w-15w</a>
+								<ul style="display: none" >
+									{% for price3 in  price3 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price3}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">15w-20w</a>
+								<ul style="display: none" >
+									{% for price4 in  price4 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price4}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">20w-25w</a>
+								<ul style="display: none" >
+									{% for price5 in  price5 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price5}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">25w-30w</a>
+								<ul style="display: none" >
+									{% for price6 in  price6 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price6}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">30w-35w</a>
+								<ul style="display: none" >
+									{% for price7 in  price7 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price7}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">35w-50w</a>
+								<ul style="display: none" >
+									{% for price8 in  price8 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price8}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">50w-70w</a>
+								<ul style="display: none" >
+									{% for price9 in  price9 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price9}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">70w-100w</a>
+								<ul style="display: none" >
+									{% for price10 in  price10 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price10}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+							<li class="divider"></li>
+							<li role="presentation" class="nav_taggle">
+								<a href="javascript:void(0)">100w</a>
+								<ul style="display: none" >
+									{% for price11 in  price11 %}
+									<li class="selet">
+										<a href="javascript:void(0)">{{price11}}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</li>
+						</ul>
+			</div>
+			<!-- /btn-group -->
+		</div>
+		</div>
+		<!-- /input-group -->
+		<button  class="btn btn-default submitF" id="submitM">查询</button>
+		<span>（删除已选的汽车名，直接点击即可，最少选择2个，最多选择5个！）</span>
+		<!-- </form> -->
+		<div class="selectitem" id="selectNames"></div>
+		<div class="panel panel-default comments">
+			<div class="panel-heading">
+				<div id="literal_m"></div>
+				<h3 class="panel-title" >文字评论</h3>
+			</div>
+			<div class="panel-body" id="commentM">
+			<div class ="panel_contentM"></div>
+			</div>
+		</div>
+		<!-- <h3>图表展示</h3> -->
+		<div id="figure_m"></div>
+		<div id="chart4"></div>
+	</div>
+	<div id="MutiPro"></div>
+	<div id="MutiProperty">
+		<h1 class="page-header">多属性</h1>
+		<div class="col-lg-5">
+			<div class="input-group">
+				<input type="text" class="form-control userchoose  chooseproperty" aria-label="..." placeholder="请选择属性名" name="propertyS">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						属性名
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right my_ullist_p" role="menu">
+						{% for property in  property %}
+						<li class="selet">
+							<a href="javascript:void(0)">{{property}}</a>
 						</li>
-						<li class="divider"></li>
-						{% endfor %} -->
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">5W</a>
-							<ul style="display: none" >
-								{% for price1 in  price1 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price1}}</a>
-								</li>
-								{% endfor %}
-							</ul>
+						{% endfor %}
+					</ul>
+				</div>
+				<!-- /btn-group -->
+			</div>
+		</div>
+		<div class="col-lg-5">
+			<div class="input-group">
+				<input type="text" class="form-control userchoose  chooseproperty" aria-label="..." placeholder="属性在你心中所占的百分比" name="propertyS">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						权值
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right my_ullist_p" role="menu">
+						<li class="selet">
+							<a href="javascript:void(0)">0.10</a>
 						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">5w-10w</a>
-							<ul style="display: none" >
-								{% for price2 in price2 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price2}}</a>
-								</li>
-								{% endfor %}
-							</ul>
+						<li class="selet">
+							<a href="javascript:void(0)">0.25</a>
 						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">10w-15w</a>
-							<ul style="display: none" >
-								{% for price3 in  price3 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price3}}</a>
-								</li>
-								{% endfor %}
-							</ul>
+						<li class="selet">
+							<a href="javascript:void(0)">0.50</a>
 						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">15w-20w</a>
-							<ul style="display: none" >
-								{% for price4 in  price4 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price4}}</a>
-								</li>
-								{% endfor %}
-							</ul>
+						<li class="selet">
+							<a href="javascript:void(0)">0.75</a>
 						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">20w-25w</a>
-							<ul style="display: none" >
-								{% for price5 in  price5 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price5}}</a>
-								</li>
-								{% endfor %}
-							</ul>
-						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">25w-30w</a>
-							<ul style="display: none" >
-								{% for price6 in  price6 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price6}}</a>
-								</li>
-								{% endfor %}
-							</ul>
-						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">30w-35w</a>
-							<ul style="display: none" >
-								{% for price7 in  price7 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price7}}</a>
-								</li>
-								{% endfor %}
-							</ul>
-						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">35w-50w</a>
-							<ul style="display: none" >
-								{% for price8 in  price8 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price8}}</a>
-								</li>
-								{% endfor %}
-							</ul>
-						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">50w-70w</a>
-							<ul style="display: none" >
-								{% for price9 in  price9 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price9}}</a>
-								</li>
-								{% endfor %}
-							</ul>
-						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">70w-100w</a>
-							<ul style="display: none" >
-								{% for price10 in  price10 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price10}}</a>
-								</li>
-								{% endfor %}
-							</ul>
-						</li>
-						<li class="divider"></li>
-						<li role="presentation" class="nav_taggle">
-							<a href="javascript:void(0)">100w</a>
-							<ul style="display: none" >
-								{% for price11 in  price11 %}
-								<li class="selet">
-									<a href="javascript:void(0)">{{price11}}</a>
-								</li>
-								{% endfor %}
-							</ul>
+						<li class="selet">
+							<a href="javascript:void(0)">1.00</a>
 						</li>
 					</ul>
+				</div>
+				<!-- /btn-group -->
+			</div>
 		</div>
-		<!-- /btn-group -->
-	</div>
-	</div>
-	<!-- /input-group -->
-	<button  class="btn btn-default submitF" id="submitM">查询</button>
-	<span>（删除已选的汽车名，直接点击即可，最少选择2个，最多选择5个！）</span>
-	<!-- </form> -->
-	<div class="selectitem" id="selectNames"></div>
-	<div class="panel panel-default comments">
-		<div class="panel-heading">
-			<div id="literal_m"></div>
-			<h3 class="panel-title" >文字评论</h3>
+		<button  class="btn btn-default submitF" id="sureSelect">选择</button>
+		<button  class="btn btn-default submitF" id="submitMP">查询</button>
+		<div class="selectitem" id="selectProperties"></div>
+		<div id="literal_mp"></div>
+		<div class="panel panel-default comments">
+			<div class="panel-heading">
+				<div id="literal_m"></div>
+				<h3 class="panel-title" >文字评论</h3>
+			</div>
+			<div class="panel-body" id="commentM">
+			<div class ="panel_contentM"></div>
+			</div>
 		</div>
-		<div class="panel-body" id="commentM">
-		<div class ="panel_contentM"></div>
-		</div>
+		<!-- <h3>图表展示</h3> -->
+		<div id="figure_mp"></div>
+		<div id="chart5"></div>
 	</div>
-	<!-- <h3>图表展示</h3> -->
-	<div id="chart4"></div>
-</div>
-<div id="Help">
-<h1 class="page-header">帮助</h1>
-</div>
+	<div id="Help">
+		<h1 class="page-header">帮助</h1>
+	</div>
 </div>
 <div class="backToTop">
-<a class="btn btn-info back-to-top" href="#top" role="button">回到顶部</a>
+	<a class="btn btn-info back-to-top" href="#top" role="button">回到顶部</a>
 </div>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 {% load staticfiles %}

@@ -32,7 +32,7 @@ def getContext():
             break
         # 不使用用大而全的汽车名文件
         # fp = file(
-        #     "/home/susu/Desktop/Middle-Test/Middle/source/price" + str(num) + ".txt", 'r')
+        #  "/home/susu/Desktop/Middle-Test/Middle/source/price" + str(num) + ".txt", 'r')
         # 使用从测试文件里提取出来的文件
         fp = file(
             "/home/susu/Desktop/NewData/crawler/w_P" + str(num) + ".txt", 'r')
@@ -245,7 +245,8 @@ def mutifigure(request):
         str0 += nameInterval(k) + "    "
         k = k.decode('utf-8')
         allcars[k] = allProperty(k)
-    reslut += "("+strcars+")"+str0+'\n'+"("+strcars+")"+str1+'\n'+"("+strcars+")"+str2+"\n"+"("+strcars+")"+"各大属性比较情况如下："+"\n"
+    reslut += "("+strcars+")"+str0+'\n'+"("+strcars+")"+str1+'\n' + \
+        "("+strcars+")"+str2+"\n"+"("+strcars+")"+"各大属性比较情况如下："+"\n"
     listp = []
     # propertyList存放11个大属性的一个数组
     propertyList = []
@@ -364,3 +365,102 @@ def nameInterval(name):
                 return dictRespon[num]
         fp.close()
         num = num + 1
+
+
+# 对多属性的操作
+def mutiPropertyfigure(request):
+    properties = request.GET.get('carproperty', '')
+    properties = properties.encode('utf-8')
+    # 存储属性和相应的属性,使用dict结构
+    dictPV = {}
+    # 用户选择的属性 userChoose = []
+    userChoose = []
+    propertieslist = properties.split(" ")
+    for key in propertieslist:
+        pv = key.split("*")
+        dictPV[pv[0]] = pv[1]
+        userChoose.append(pv[0])
+    print "最初的值"
+    print dictPV
+    # proVal每一个产品对应的多属性（用户选择的属性）总的值
+    proVal = properVal(dictPV)
+    # 按value进行排序，选择前5个而且值是大于零的产品名
+    dict1 = sorted(proVal.iteritems(), key=lambda d: d[1], reverse=True)
+    tmpname = []
+    num = 1
+    for k, v in dict1:
+        if num > 5:
+            break
+        if v > 0:
+            tmpname.append(k)
+        num = num + 1
+
+    # 推荐的汽车如下：
+    recomCar = "推荐的汽车如下："
+    # 推荐的汽车的相应的价位
+    str0 = "价格区间: "
+    str1 = ""
+    # 推荐汽车的所有的属性
+    propers = []
+    namepropers = {}
+    for k in tmpname:
+        recomCar += k + "   "
+        str1 += k + "   "
+        str0 += nameInterval(k) + "    "
+        # 该汽车的所有的属性
+        tmpproper = allProperty(k)
+        namepropers[k] = allProperty(k)
+        propers.append(tmpproper)
+    # 推荐汽车的相应的属性的分析
+    # recommandPV = {}
+    strPV = "属性比较："+"\n"
+    for k1 in userChoose:
+        strPV += k1 + ":    "
+        for key in propers:
+            for k, v in key.items():
+                if k == k1:
+                    strPV += valuedegree(v) + "    "
+            print k, v
+        strPV += "\n"
+    print recomCar+"\n"+str1+"\n" + str0 + "\n"+strPV
+    sumResult = recomCar+"\n"+str1+"\n" + str0 + "\n"+strPV
+    namepropers["0"] = sumResult
+    return HttpResponse(json.dumps(namepropers), content_type='application')
+
+
+# 计算每一个产品对应的多属性总的值
+def properVal(dictpv):
+    print "最出的值是否传递进来了"
+    print dictpv
+    # for keys in dictpv:
+    #      print keys
+    file_na = file('/home/susu/Desktop/NewData/intersectName.txt', 'r')
+    nalist = []
+    while True:
+        # 读到最后一行 结束
+        line = file_na.readline()
+        lineList = line.split()
+        # 去除空行
+        lineList = ''.join(lineList)
+        if not line:
+            break
+        nalist.append(lineList)
+    file_na.close()
+    # print nalist
+
+    # 存贮每个名字及其对应的，综合用户选择后的值
+    sumResult = {}
+    for na in nalist:
+        dictproperty = allProperty(na)
+        #     找到用户选择的属性，计算属性乘权值，再把结果相加
+        result1 = 0
+        for key1, v1 in dictproperty.items():
+            for keys, v in dictpv.items():
+                if key1 == keys:
+                    result1 += v1*float(v)
+                    print result1
+        sumResult[na] = result1
+        # 把每一个名字和相应的总的权值存放在一个dict里
+        # 给dict排序 返回dict前三的数据
+    print sumResult
+    return sumResult

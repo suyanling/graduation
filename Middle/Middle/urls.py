@@ -20,5 +20,6 @@ urlpatterns = patterns("",
                        (r'^singlefigure/$', singlefigure),
                        (r'^singlefigure1/$', singlefigure1),
                        (r'^singlefigure2/$', singlefigure2),
-                       (r'^mutifigure/$', mutifigure)
+                       (r'^mutifigure/$', mutifigure),
+                       (r'^mutiPropertyfigure/$', mutiPropertyfigure)
                        )

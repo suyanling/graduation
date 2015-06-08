@@ -369,14 +369,15 @@ $(document).ready(function() {
 			// 给图像重绘
 			plot1.replot();
 		}
-		/*
-		对多产品进行操作
-		 */
+	/*
+	对多产品进行操作
+	 */
 	$("#submitM").click(function() {
 		var carnames = $('#selectNames span').text();
 		// console.log(carnames);
 		carnamesarray = carnames.split(" ");
 		carnamesarray.pop(" ");
+		console.log(carnamesarray);
 		if (carnamesarray.length < 2) {
 			alert("至少选择两个产品！")
 			return;
@@ -390,8 +391,34 @@ $(document).ready(function() {
 
 			});
 		}
+	});
+
+	/*
+	对多属性进行操作
+	 */
+	$("#submitMP").click(function() {
+		var carproperty = $('#selectProperties span').text();
+		// console.log(carnames);
+		carpropertyarray = carproperty.split(" ");
+		carpropertyarray.pop(" ");
+		console.log(carpropertyarray);
+		if (carpropertyarray.length < 2) {
+			alert("至少选择两个属性！")
+			return;
+		}
+		if (carproperty == "") {
+			alert("请选择属性和相应的权值！");
+		} else {
+			$.getJSON('/mutiPropertyfigure/?carproperty=' + carproperty, function(ret) {
+				console.log("传回来的数据！！！");
+				console.log(ret);
+				pirture('chart5', ret);
+
+			});
+		}
 
 	});
+
 
 
 

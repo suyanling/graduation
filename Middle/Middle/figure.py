@@ -6,9 +6,8 @@
 def allProperty(na):
     file_NPV = file('/home/susu/Desktop/NewData/total_p.txt', 'r')
     # print "typpeof na"
-    # print type(na)
-    na = na.encode('utf-8')
-    # print type(na)
+    if isinstance(na, unicode):
+        na = na.encode('utf-8')
     # 下面的value的值对应的大属性
     # 大属性的顺序为:
     # 1 空间 2 动力 3 操控 4 油耗 5 舒适性 6 外观 7 内饰 8 性价比 9 售后 10 安全性

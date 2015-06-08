@@ -103,7 +103,7 @@ def bigProperty(proper, na):
         if na == "":
             result = "《" + proper + "》这方面"
             if str1 != "":
-                str1 = "非常的车型是：" + str1 + ","
+                str1 = "非常好的车型是：" + str1 + ","
             if str2 != "":
                 str2 = "比较好的车型是:" + str2+'\n'
             result = str1 + str2
