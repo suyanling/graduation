@@ -2,12 +2,12 @@ $(document).ready(function() {
 	var name = $('#selectName').text();
 	var property = $('#selectProperty').text();
 	// 去除空行和空格
-	var na = name.replace(/\s/g, "");
-	var pro = property.replace(/\s/g, "");
-	if (na == ""){
+	name = name.replace(/\s/g, "");
+	property = property.replace(/\s/g, "");
+	if (name == ""){
 		$('#selectName').hide();
 	}
-	if (pro == ""){
+	if (property == ""){
 		$('#selectProperty').hide();
 	}
 	/* 
@@ -115,7 +115,6 @@ $(document).ready(function() {
 		$.getJSON('/singlefigure/?carname=' + name, function(ret) {
 			pirture("Chart1", ret, '.panel_contentS');
 		});
-
 	}
 	if (property != "" && name == "") {
 		$('.graphicName').hide();
@@ -125,14 +124,14 @@ $(document).ready(function() {
 		$.getJSON('/singlefigure1/?carproperty=' + property, function(ret) {
 			if (ret == "") {
 				$('.graphicFeature').hide();
+				$('.panel_contentS').text("没有这方面比较好的车型！");
+				return ;
 			}
 			// innername是推荐的汽车的名字
 			var innername = '';
 			/*
 			先检验返回的数据是什么样的格式，再根据相应的数据结果处理
 			 */
-			// console.log(ret[0][0]);
-			// console.log(ret);
 			var arrayfigure = [];
 			for (var i = 0; i < ret.length; i++) {
 				innername += '<span class="label label-default">' + ret[i][0] + '</span>' + '	';
