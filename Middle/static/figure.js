@@ -1,6 +1,15 @@
 $(document).ready(function() {
 	var name = $('#selectName').text();
 	var property = $('#selectProperty').text();
+	// 去除空行和空格
+	var na = name.replace(/\s/g, "");
+	var pro = property.replace(/\s/g, "");
+	if (na == ""){
+		$('#selectName').hide();
+	}
+	if (pro == ""){
+		$('#selectProperty').hide();
+	}
 	/* 
 	本来想让输入框中保存选择的名称和属性，提升用户的体验，但是，
 	这样，就不能单独选择汽车名称了
@@ -93,7 +102,7 @@ $(document).ready(function() {
 	 */
 	if (name != "" && property != "") {
 		$.getJSON('/singlefigure2/?carname=' + name + '&carproperty=' + property, function(ret) {
-			pirture("Chart3", ret);
+			pirture("Chart3", ret, '.panel_contentS');
 		});
 		$('.graphicAll').show();
 		$('.graphicFeature').hide();
@@ -104,7 +113,7 @@ $(document).ready(function() {
 		$('.graphicFeature').hide();
 		$('.graphicAll').hide();
 		$.getJSON('/singlefigure/?carname=' + name, function(ret) {
-			pirture("Chart1", ret);
+			pirture("Chart1", ret, '.panel_contentS');
 		});
 
 	}
@@ -160,7 +169,7 @@ $(document).ready(function() {
 		$('.graphicAll').hide();
 	}
 
-	function pirture(chart, ret) {
+	function pirture(chart, ret, panel) {
 			/****************************/
 			/*
 			本来是想把属性值为0的数值变成0.05
@@ -210,7 +219,8 @@ $(document).ready(function() {
 				if (key == "0") {
 					strM = "HELLO";
 					// console.log(ret[key]);
-					$('.panel_contentM').text(" ");
+					// $('.panel_contentM').text(" ");
+					$(panel).text(" ");
 					// 对字符串ret[key]进行分解，主要是为了展示的时候好看一点
 					var tmplist = ret[key].split("\n");
 					// console.log(tmplist);
@@ -220,14 +230,17 @@ $(document).ready(function() {
 					}
 					// $('#commentM').text(ret[key]);
 					// $('#commentM').append(inner);
-					$('.panel_contentM').append(inner);
+					// $('.panel_contentM').append(inner);
+					$(panel).append(inner);
 					/*
 					if 评论里面的内容高于200px，则面板的高度自动适应
 					else 面板的高度固定在200px，这样做主要是为了美观
 	 				*/
-					var height = $('.panel_contentM').height();
+					// var height = $('.panel_contentM').height();
+					var height = $(panel).height();
 					if (height > 200) {
-						$('.panel_contentM').parent().height("auto");
+						// $('.panel_contentM').parent().height("auto");
+						$(panel).parent().height("auto");
 					}
 				} else {
 					ticks.push(key);
@@ -242,10 +255,12 @@ $(document).ready(function() {
 					默认为200px；
 					内容大于200px，则高度自动适应
 					 */
-					var heightS = $('.panel_contentS').height();
+					// var heightS = $('.panel_contentS').height();
+					var heightS = $(panel).height();
 					// console.log(heightS);
 					if(heightS > 200){
-						$('.panel_contentS').parent().height("auto");
+						// $('.panel_contentS').parent().height("auto");
+						$(panel).parent().height("auto");
 					}
 				}
 				/* 
@@ -387,7 +402,7 @@ $(document).ready(function() {
 		} else {
 			$.getJSON('/mutifigure/?carnames=' + carnames, function(ret) {
 				// console.log(ret);
-				pirture('chart4', ret);
+				pirture('chart4', ret, ".panel_contentM");
 
 			});
 		}
@@ -412,14 +427,10 @@ $(document).ready(function() {
 			$.getJSON('/mutiPropertyfigure/?carproperty=' + carproperty, function(ret) {
 				console.log("传回来的数据！！！");
 				console.log(ret);
-				pirture('chart5', ret);
+				pirture('chart5', ret, ".panel_contentMP");
 
 			});
 		}
 
 	});
-
-
-
-
 });

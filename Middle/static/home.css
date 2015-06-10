@@ -86,7 +86,7 @@ body{
 #selectNames {
 	width: 500px;
 }
-#selectNames span{
+#selectNames span, .selectINFO span{
 	padding: 5px;
 	font-size: 20px;
 	font-weight: bold;
